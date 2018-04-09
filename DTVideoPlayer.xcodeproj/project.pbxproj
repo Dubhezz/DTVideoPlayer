@@ -15,6 +15,7 @@
 		4627B1D9207B7A0F00220C79 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4627B1D8207B7A0F00220C79 /* main.m */; };
 		4627B1E3207B7A0F00220C79 /* DTVideoPlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4627B1E2207B7A0F00220C79 /* DTVideoPlayerTests.m */; };
 		4627B1EE207B7A0F00220C79 /* DTVideoPlayerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4627B1ED207B7A0F00220C79 /* DTVideoPlayerUITests.m */; };
+		4627B1FE207B7AC100220C79 /* DTVideoDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4627B1FD207B7AC100220C79 /* DTVideoDownloader.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,8 @@
 		4627B1E9207B7A0F00220C79 /* DTVideoPlayerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DTVideoPlayerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4627B1ED207B7A0F00220C79 /* DTVideoPlayerUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTVideoPlayerUITests.m; sourceTree = "<group>"; };
 		4627B1EF207B7A0F00220C79 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4627B1FC207B7AC100220C79 /* DTVideoDownloader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTVideoDownloader.h; sourceTree = "<group>"; };
+		4627B1FD207B7AC100220C79 /* DTVideoDownloader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTVideoDownloader.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +84,7 @@
 		4627B1BD207B7A0F00220C79 = {
 			isa = PBXGroup;
 			children = (
+				4627B1FB207B7A7000220C79 /* VideoPlayer */,
 				4627B1C8207B7A0F00220C79 /* DTVideoPlayer */,
 				4627B1E1207B7A0F00220C79 /* DTVideoPlayerTests */,
 				4627B1EC207B7A0F00220C79 /* DTVideoPlayerUITests */,
@@ -130,6 +134,15 @@
 				4627B1EF207B7A0F00220C79 /* Info.plist */,
 			);
 			path = DTVideoPlayerUITests;
+			sourceTree = "<group>";
+		};
+		4627B1FB207B7A7000220C79 /* VideoPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				4627B1FC207B7AC100220C79 /* DTVideoDownloader.h */,
+				4627B1FD207B7AC100220C79 /* DTVideoDownloader.m */,
+			);
+			path = VideoPlayer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -265,6 +278,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4627B1FE207B7AC100220C79 /* DTVideoDownloader.m in Sources */,
 				4627B1CE207B7A0F00220C79 /* ViewController.m in Sources */,
 				4627B1D9207B7A0F00220C79 /* main.m in Sources */,
 				4627B1CB207B7A0F00220C79 /* AppDelegate.m in Sources */,
@@ -431,7 +445,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3U3XKPF3QC;
 				INFOPLIST_FILE = DTVideoPlayer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Dubhe.DTVideoPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -444,7 +460,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3U3XKPF3QC;
 				INFOPLIST_FILE = DTVideoPlayer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Dubhe.DTVideoPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
