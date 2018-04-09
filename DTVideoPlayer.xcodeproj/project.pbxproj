@@ -15,7 +15,8 @@
 		4627B1D9207B7A0F00220C79 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4627B1D8207B7A0F00220C79 /* main.m */; };
 		4627B1E3207B7A0F00220C79 /* DTVideoPlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4627B1E2207B7A0F00220C79 /* DTVideoPlayerTests.m */; };
 		4627B1EE207B7A0F00220C79 /* DTVideoPlayerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4627B1ED207B7A0F00220C79 /* DTVideoPlayerUITests.m */; };
-		4627B1FE207B7AC100220C79 /* DTVideoDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4627B1FD207B7AC100220C79 /* DTVideoDownloader.m */; };
+		4642404C207B9DC40068BB90 /* DTNetworkDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4642404B207B9DC40068BB90 /* DTNetworkDownloader.m */; };
+		46424050207BA0100068BB90 /* DTUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 4642404F207BA0100068BB90 /* DTUtil.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,8 +53,10 @@
 		4627B1E9207B7A0F00220C79 /* DTVideoPlayerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DTVideoPlayerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4627B1ED207B7A0F00220C79 /* DTVideoPlayerUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTVideoPlayerUITests.m; sourceTree = "<group>"; };
 		4627B1EF207B7A0F00220C79 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4627B1FC207B7AC100220C79 /* DTVideoDownloader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTVideoDownloader.h; sourceTree = "<group>"; };
-		4627B1FD207B7AC100220C79 /* DTVideoDownloader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTVideoDownloader.m; sourceTree = "<group>"; };
+		4642404A207B9DC40068BB90 /* DTNetworkDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTNetworkDownloader.h; sourceTree = "<group>"; };
+		4642404B207B9DC40068BB90 /* DTNetworkDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTNetworkDownloader.m; sourceTree = "<group>"; };
+		4642404E207BA0100068BB90 /* DTUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTUtil.h; sourceTree = "<group>"; };
+		4642404F207BA0100068BB90 /* DTUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTUtil.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +87,8 @@
 		4627B1BD207B7A0F00220C79 = {
 			isa = PBXGroup;
 			children = (
+				4642404D207BA0100068BB90 /* Utility */,
+				46424048207B9D9A0068BB90 /* Component */,
 				4627B1FB207B7A7000220C79 /* VideoPlayer */,
 				4627B1C8207B7A0F00220C79 /* DTVideoPlayer */,
 				4627B1E1207B7A0F00220C79 /* DTVideoPlayerTests */,
@@ -139,10 +144,34 @@
 		4627B1FB207B7A7000220C79 /* VideoPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				4627B1FC207B7AC100220C79 /* DTVideoDownloader.h */,
-				4627B1FD207B7AC100220C79 /* DTVideoDownloader.m */,
 			);
 			path = VideoPlayer;
+			sourceTree = "<group>";
+		};
+		46424048207B9D9A0068BB90 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				46424049207B9DAE0068BB90 /* Loader */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+		46424049207B9DAE0068BB90 /* Loader */ = {
+			isa = PBXGroup;
+			children = (
+				4642404A207B9DC40068BB90 /* DTNetworkDownloader.h */,
+				4642404B207B9DC40068BB90 /* DTNetworkDownloader.m */,
+			);
+			path = Loader;
+			sourceTree = "<group>";
+		};
+		4642404D207BA0100068BB90 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				4642404E207BA0100068BB90 /* DTUtil.h */,
+				4642404F207BA0100068BB90 /* DTUtil.m */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -278,8 +307,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4627B1FE207B7AC100220C79 /* DTVideoDownloader.m in Sources */,
+				46424050207BA0100068BB90 /* DTUtil.m in Sources */,
 				4627B1CE207B7A0F00220C79 /* ViewController.m in Sources */,
+				4642404C207B9DC40068BB90 /* DTNetworkDownloader.m in Sources */,
 				4627B1D9207B7A0F00220C79 /* main.m in Sources */,
 				4627B1CB207B7A0F00220C79 /* AppDelegate.m in Sources */,
 			);
