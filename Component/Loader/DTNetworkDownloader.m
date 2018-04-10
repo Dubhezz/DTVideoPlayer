@@ -9,6 +9,8 @@
 #import "DTNetworkDownloader.h"
 #import "DTUtil.h"
 
+@import MobileCoreServices;
+
 @interface DTNetworkDownloaderTask : NSObject
 
 @property (nonatomic, strong) NSURLSessionTask           *task;
@@ -113,133 +115,161 @@
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler {
-    if ([response isKindOfClass:[NSHTTPURLResponse class]])
-    {
-        NSHTTPURLResponse *rsp = (NSHTTPURLResponse *) response;
-        NSString *num          = rsp.allHeaderFields[@"Content-Length"];
-        if ([num isKindOfClass:[NSString class]])
-        {
-            [self.lock lock];
-            DTNetworkDownloaderTask *downloaderTask = [self.taskTable objectForKey:@(dataTask.taskIdentifier)];
-            [self.lock unlock];
-            downloaderTask.totalLength                   = [num integerValue];
-            if (downloaderTask.reciveResponse) {
-                downloaderTask.reciveResponse(downloaderTask.request.URL);
-            }
+    if (!self.contentInfo) {
+        DTContentInfo *contentInfo = [[DTContentInfo alloc] init];
+        if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+            
+            NSHTTPURLResponse *HTTPURLResponse = (NSHTTPURLResponse *)response;
+            NSString *acceptRange = HTTPURLResponse.allHeaderFields[@"Accept-Ranges"];
+            contentInfo.byteRangeAccessSupported = [acceptRange isEqualToString:@"bytes"];
+            contentInfo.contentLength = [[[HTTPURLResponse.allHeaderFields[@"Content-Range"] componentsSeparatedByString:@"/"] lastObject] longLongValue];
+            
+            NSString *mimeType = response.MIMEType;
+            CFStringRef contentType = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, (__bridge CFStringRef)(mimeType), NULL);
+            contentInfo.contentType = CFBridgingRelease(contentType);
+            
+            self.contentInfo = contentInfo;
+            
+//            NSHTTPURLResponse *rsp = (NSHTTPURLResponse *) response;
+//            NSString *num          = rsp.allHeaderFields[@"Content-Length"];
+//            if ([num isKindOfClass:[NSString class]])
+//            {
+//                [self.lock lock];
+//                DTNetworkDownloaderTask *downloaderTask = [self.taskTable objectForKey:@(dataTask.taskIdentifier)];
+//                [self.lock unlock];
+//                downloaderTask.totalLength                   = [num integerValue];
+//                if (downloaderTask.reciveResponse) {
+//                    downloaderTask.reciveResponse(downloaderTask.request.URL);
+//                }
+//            }
         }
+    }
+    if ([self.delegate respondsToSelector:@selector(downloader:didReceiveResponse:)]) {
+        [self.delegate downloader:self didReceiveResponse:response];
     }
     completionHandler(NSURLSessionResponseAllow);
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
-    [self.lock lock];
-    DTNetworkDownloaderTask *downloaderTask = [self.taskTable objectForKey:@(dataTask.taskIdentifier)];
-    [self.lock unlock];
-    DTDownloadDataCompletion completion      = downloaderTask.completion;
-    DTDownloadProgressCallBack progressCallBack = downloaderTask.progressCallBack;
-    DTDownloadDataReciveData reciveDataCallBack = downloaderTask.reciveData;
-    NSMutableData *recvdata                  = downloaderTask.data;
-    NSURLRequest *request                    = downloaderTask.request;
-    [recvdata appendData:data];
     
-    if (reciveDataCallBack) {
-        reciveDataCallBack(request.URL, request.URL, data);
+    if ([self.delegate respondsToSelector:@selector(downloader:didRecieveData:)]) {
+        [self.delegate downloader:self didRecieveData:data];
     }
     
-    if (progressCallBack)
-    {
-        float progress = recvdata.length / (float) downloaderTask.totalLength;
-        if (progress > 1)
-        {
-            progress = 1;
-            progressCallBack(request.URL,progress);
-            if (completion) {
-                completion(request.URL, request.URL, recvdata, nil);
-            }
-        }
-        if (isinf(progress))
-        {
-            progress = 0;
-            progressCallBack(request.URL,progress);
-        }
-        if (progress < 1)
-        {
-            progressCallBack(request.URL,progress);
-        }
-    } else if (completion) {
-        float progress = recvdata.length / (float) downloaderTask.totalLength;
-        if (progress > 1)
-        {
-            progress = 1;
-        }
-        if (isinf(progress))
-        {
-            progress = 0;
-        }
-        if (progress < 1)
-        {
-            completion(request.URL, request.URL, recvdata, nil);
-        }
-    }
+    
+//    [self.lock lock];
+//    DTNetworkDownloaderTask *downloaderTask = [self.taskTable objectForKey:@(dataTask.taskIdentifier)];
+//    [self.lock unlock];
+//    DTDownloadDataCompletion completion      = downloaderTask.completion;
+//    DTDownloadProgressCallBack progressCallBack = downloaderTask.progressCallBack;
+//    DTDownloadDataReciveData reciveDataCallBack = downloaderTask.reciveData;
+//    NSMutableData *recvdata                  = downloaderTask.data;
+//    NSURLRequest *request                    = downloaderTask.request;
+//    [recvdata appendData:data];
+//
+//    if (reciveDataCallBack) {
+//        reciveDataCallBack(request.URL, request.URL, data);
+//    }
+//
+//    if (progressCallBack)
+//    {
+//        float progress = recvdata.length / (float) downloaderTask.totalLength;
+//        if (progress > 1)
+//        {
+//            progress = 1;
+//            progressCallBack(request.URL,progress);
+//            if (completion) {
+//                completion(request.URL, request.URL, recvdata, nil);
+//            }
+//        }
+//        if (isinf(progress))
+//        {
+//            progress = 0;
+//            progressCallBack(request.URL,progress);
+//        }
+//        if (progress < 1)
+//        {
+//            progressCallBack(request.URL,progress);
+//        }
+//    } else if (completion) {
+//        float progress = recvdata.length / (float) downloaderTask.totalLength;
+//        if (progress > 1)
+//        {
+//            progress = 1;
+//        }
+//        if (isinf(progress))
+//        {
+//            progress = 0;
+//        }
+//        if (progress < 1)
+//        {
+//            completion(request.URL, request.URL, recvdata, nil);
+//        }
+//    }
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
-    [self.lock lock];
-    DTNetworkDownloaderTask *downloaderTask = [self.taskTable objectForKey:@(task.taskIdentifier)];
-    [self.lock unlock];
-    if (!downloaderTask)
-    {
-        return;
+    if ([self.delegate respondsToSelector:@selector(downloader:didCompleteWithError:)]) {
+        [self.delegate downloader:self didCompleteWithError:error];
     }
     
-    DTDownloadDataCompletion completion = downloaderTask.completion;
-    DTDownloadProgressCallBack progressCallBack = downloaderTask.progressCallBack;
-    NSMutableData *data          = downloaderTask.data;
-    NSURLRequest *request        = downloaderTask.request;
-    [self.lock lock];
-//    [self.reqTable removeObjectForKey:request.keyForLoader];
-    [self.taskTable removeObjectForKey:@(task.taskIdentifier)];
-    [self.lock unlock];
-    NSURL *fileURL = [NSURL fileURLWithPath:[DTNetworkDownloader cacheFilePathForURL:request.URL.absoluteString]];
-    if (error)
-    {
-        if (error.code != NSURLErrorCancelled)
-        {
-            if (downloaderTask.retryTimes < self.retryTimes)
-            {
-                downloaderTask.retryTimes++;
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), self.gcd_queue, ^{
-                    [self dataWithURLString:request.URL.absoluteString completion:completion];
-                });
-            }
-            else
-            {
-                if (completion)
-                {
-                    completion(fileURL, request.URL, nil, error);
-                }
-            }
-            
-        }
-        else
-        {
-            if (completion)
-            {
-                completion(fileURL, request.URL, nil, error);
-            }
-        }
-    }
-    else
-    {
-        [data writeToURL:fileURL atomically:YES];
-        if (progressCallBack) {
-            progressCallBack(fileURL, 1);
-        }
-        if (completion)
-        {
-            completion(fileURL, request.URL, data, error);
-        }
-    }
+//
+//    [self.lock lock];
+//    DTNetworkDownloaderTask *downloaderTask = [self.taskTable objectForKey:@(task.taskIdentifier)];
+//    [self.lock unlock];
+//    if (!downloaderTask)
+//    {
+//        return;
+//    }
+//
+//    DTDownloadDataCompletion completion = downloaderTask.completion;
+//    DTDownloadProgressCallBack progressCallBack = downloaderTask.progressCallBack;
+//    NSMutableData *data          = downloaderTask.data;
+//    NSURLRequest *request        = downloaderTask.request;
+//    [self.lock lock];
+////    [self.reqTable removeObjectForKey:request.keyForLoader];
+//    [self.taskTable removeObjectForKey:@(task.taskIdentifier)];
+//    [self.lock unlock];
+//    NSURL *fileURL = [NSURL fileURLWithPath:[DTNetworkDownloader cacheFilePathForURL:request.URL.absoluteString]];
+//    if (error)
+//    {
+//        if (error.code != NSURLErrorCancelled)
+//        {
+//            if (downloaderTask.retryTimes < self.retryTimes)
+//            {
+//                downloaderTask.retryTimes++;
+//                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), self.gcd_queue, ^{
+//                    [self dataWithURLString:request.URL.absoluteString completion:completion];
+//                });
+//            }
+//            else
+//            {
+//                if (completion)
+//                {
+//                    completion(fileURL, request.URL, nil, error);
+//                }
+//            }
+//
+//        }
+//        else
+//        {
+//            if (completion)
+//            {
+//                completion(fileURL, request.URL, nil, error);
+//            }
+//        }
+//    }
+//    else
+//    {
+//        [data writeToURL:fileURL atomically:YES];
+//        if (progressCallBack) {
+//            progressCallBack(fileURL, 1);
+//        }
+//        if (completion)
+//        {
+//            completion(fileURL, request.URL, data, error);
+//        }
+//    }
 }
 
 + (NSString *)cacheDirectory

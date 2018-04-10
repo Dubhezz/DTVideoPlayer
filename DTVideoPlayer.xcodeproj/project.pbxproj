@@ -17,6 +17,8 @@
 		4627B1EE207B7A0F00220C79 /* DTVideoPlayerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4627B1ED207B7A0F00220C79 /* DTVideoPlayerUITests.m */; };
 		4642404C207B9DC40068BB90 /* DTNetworkDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4642404B207B9DC40068BB90 /* DTNetworkDownloader.m */; };
 		46424050207BA0100068BB90 /* DTUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 4642404F207BA0100068BB90 /* DTUtil.m */; };
+		46424053207CF1D70068BB90 /* DTAssetResourceLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 46424052207CF1D70068BB90 /* DTAssetResourceLoader.m */; };
+		46424056207CFEF20068BB90 /* DTContentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 46424055207CFEF20068BB90 /* DTContentInfo.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,10 @@
 		4642404B207B9DC40068BB90 /* DTNetworkDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTNetworkDownloader.m; sourceTree = "<group>"; };
 		4642404E207BA0100068BB90 /* DTUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTUtil.h; sourceTree = "<group>"; };
 		4642404F207BA0100068BB90 /* DTUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTUtil.m; sourceTree = "<group>"; };
+		46424051207CF1D70068BB90 /* DTAssetResourceLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTAssetResourceLoader.h; sourceTree = "<group>"; };
+		46424052207CF1D70068BB90 /* DTAssetResourceLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTAssetResourceLoader.m; sourceTree = "<group>"; };
+		46424054207CFEF20068BB90 /* DTContentInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTContentInfo.h; sourceTree = "<group>"; };
+		46424055207CFEF20068BB90 /* DTContentInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTContentInfo.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +167,10 @@
 			children = (
 				4642404A207B9DC40068BB90 /* DTNetworkDownloader.h */,
 				4642404B207B9DC40068BB90 /* DTNetworkDownloader.m */,
+				46424051207CF1D70068BB90 /* DTAssetResourceLoader.h */,
+				46424052207CF1D70068BB90 /* DTAssetResourceLoader.m */,
+				46424054207CFEF20068BB90 /* DTContentInfo.h */,
+				46424055207CFEF20068BB90 /* DTContentInfo.m */,
 			);
 			path = Loader;
 			sourceTree = "<group>";
@@ -310,8 +320,10 @@
 				46424050207BA0100068BB90 /* DTUtil.m in Sources */,
 				4627B1CE207B7A0F00220C79 /* ViewController.m in Sources */,
 				4642404C207B9DC40068BB90 /* DTNetworkDownloader.m in Sources */,
+				46424053207CF1D70068BB90 /* DTAssetResourceLoader.m in Sources */,
 				4627B1D9207B7A0F00220C79 /* main.m in Sources */,
 				4627B1CB207B7A0F00220C79 /* AppDelegate.m in Sources */,
+				46424056207CFEF20068BB90 /* DTContentInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
